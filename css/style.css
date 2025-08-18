@@ -4629,6 +4629,55 @@ header.hp_1 .side_links li.user_contrl {
 	border-top: 0;
 }
 
+/* ================= PAGINATION TABS ================= */
+
+.pagination-tabs {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 30px 0;
+	gap: 10px;
+}
+
+.pagination-tabs input[type="radio"] {
+	display: none;
+}
+
+.pagination-tabs label {
+	display: inline-block;
+	padding: 10px 15px;
+	margin: 0 5px;
+	background-color: #f5f5f5;
+	color: #666;
+	border-radius: 25px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	font-size: 14px;
+	font-weight: 500;
+	min-width: 40px;
+	text-align: center;
+	border: 2px solid transparent;
+}
+
+.pagination-tabs label:hover {
+	background-color: #e9ecef;
+	color: #333;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.pagination-tabs input[type="radio"]:checked + label {
+	background-color: #4a90e2;
+	color: white;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+	border-color: #4a90e2;
+}
+
+.pagination-tabs input[type="radio"]:checked + label:hover {
+	background-color: #357abd;
+}
+
 
 
 /* ================== VIDEO PLAYER ================= */
