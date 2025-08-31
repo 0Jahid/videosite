@@ -127,7 +127,7 @@ function renderPopularVideos(videos) {
             <div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
                 <div class="videoo">
                     <div class="vid_thumbainl">
-                        <a href="single_video_page.html" title="${videoData.title}">
+                        <a href="single_video_page.html?id=${videoData.post_id}" title="${videoData.title}">
                             <img src="${videoData.thumbnail_url}" alt="${videoData.title}" onerror="this.src='images/resources/vide1.png'">
                             <span class="hd-badge">HD</span>
                             <span class="watch_later">
@@ -136,7 +136,7 @@ function renderPopularVideos(videos) {
                         </a>	
                     </div><!--vid_thumbnail end-->
                     <div class="video_info">
-                        <h3><a href="single_video_page.html" title="${videoData.title}">${truncatedTitle}</a></h3>
+                        <h3><a href="single_video_page.html?id=${videoData.post_id}" title="${videoData.title}">${truncatedTitle}</a></h3>
                         <h4><a href="#" title="">${videoData.author}</a></h4>
                         <span>${videoData.views} views .<small class="posted_dt">${timeAgo}</small></span>
                     </div>
@@ -185,7 +185,7 @@ function renderVideosPage(videos, page) {
             <div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
                 <div class="videoo">
                     <div class="vid_thumbainl">
-                        <a href="single_video_page.html" title="${videoData.title}">
+                        <a href="single_video_page.html?id=${videoData.post_id}" title="${videoData.title}">
                             <img src="${videoData.thumbnail_url}" alt="${videoData.title}" onerror="this.src='images/resources/vide1.png'">
                             <span class="hd-badge">HD</span>
                             <span class="watch_later">
@@ -194,7 +194,7 @@ function renderVideosPage(videos, page) {
                         </a>	
                     </div><!--vid_thumbnail end-->
                     <div class="video_info">
-                        <h3><a href="single_video_page.html" title="${videoData.title}">${truncatedTitle}</a></h3>
+                        <h3><a href="single_video_page.html?id=${videoData.post_id}" title="${videoData.title}">${truncatedTitle}</a></h3>
                         <h4><a href="#" title="">${videoData.author}</a></h4>
                         <span>${videoData.views} views .<small class="posted_dt">${timeAgo}</small></span>
                     </div>

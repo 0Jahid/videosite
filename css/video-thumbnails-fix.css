@@ -218,3 +218,125 @@
         text-align: center;
     }
 }
+
+
+/* Download Button Styles */
+.download-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white !important;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.download-btn:hover {
+    background: linear-gradient(135deg, #218838, #1ea080);
+    color: white !important;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.download-btn i {
+    font-size: 16px;
+}
+
+/* Single Video Page Styles */
+.vid-pr iframe {
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.single_video .vid-info h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.about-ch-sec .abt-rw p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.about-ch-sec .abt-rw h4 {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* Enhanced Video Player Styles */
+.video-player-container {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.watch-video-btn:hover {
+    background: #f8f9fa !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    color: #5a67d8 !important;
+}
+
+.toggle-iframe-btn:hover {
+    background: #5a6268 !important;
+    transform: translateY(-1px);
+}
+
+.external-video-btn:hover {
+    background: #f8f9fa !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.video-fallback h4 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.video-loading {
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+}
+
+/* Direct link container styles */
+.video-direct-link {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none !important;
+    transition: all 0.3s ease;
+}
+
+.video-direct-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3) !important;
+}
+
+/* Responsive video player */
+@media (max-width: 768px) {
+    .video-player-container iframe {
+        height: 250px;
+    }
+    
+    .video-fallback, .video-direct-link {
+        padding: 20px 15px !important;
+    }
+    
+    .watch-video-btn, .external-video-btn {
+        padding: 10px 20px !important;
+        font-size: 14px;
+    }
+    
+    .video-direct-link h3 {
+        font-size: 20px !important;
+    }
+}
