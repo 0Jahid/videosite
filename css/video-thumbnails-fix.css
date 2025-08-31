@@ -1,0 +1,220 @@
+/* Fixed Video Thumbnail Sizes */
+.vid_thumbainl {
+    height: 180px; /* Fixed height for all thumbnails */
+    overflow: hidden;
+    border-radius: 8px; /* Add slight rounding for better appearance */
+}
+
+.vid_thumbainl > a {
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.vid_thumbainl > a img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers the container while maintaining aspect ratio */
+    object-position: center; /* Centers the image in the container */
+    transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+/* HD Badge Styles */
+.hd-badge {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+    color: white;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    letter-spacing: 0.5px;
+}
+
+/* Alternative HD badge styles - you can switch between these */
+.hd-badge.style-2 {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+.hd-badge.style-3 {
+    background: linear-gradient(135deg, #43e97b, #38f9d7);
+}
+
+.hd-badge.style-4 {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #fff;
+}
+
+/* Ensure consistent video card heights */
+.videoo {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.video_info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Make sure all video cards in a row have the same height */
+.vidz_list .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.vidz_list .row > div[class*="col-"] {
+    display: flex;
+    margin-bottom: 26px;
+}
+
+.vidz_list .row > div[class*="col-"] .videoo {
+    width: 100%;
+}
+
+/* Enhanced Pagination Styles */
+.pagination-tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.pagination-tabs input[type="radio"] {
+    display: none;
+}
+
+.pagination-tabs label {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    min-width: 40px;
+    text-align: center;
+}
+
+.pagination-tabs label:hover {
+    background-color: #e9ecef;
+    border-color: #adb5bd;
+}
+
+.pagination-tabs input[type="radio"]:checked + label {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination-tabs button {
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.pagination-tabs button:hover:not(:disabled) {
+    background-color: #5a6268;
+}
+
+.pagination-tabs button:disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Loading indicator */
+.loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+    color: #666;
+}
+
+/* Video count information */
+.page-info {
+    font-weight: 600;
+    color: #333 !important;
+}
+
+.videos-per-page-info {
+    display: block;
+    margin-top: 5px !important;
+    margin-left: 0 !important;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Videos per page selector */
+.videos-per-page-selector {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 15px 0;
+    gap: 10px;
+}
+
+.videos-per-page-selector label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.videos-per-page-selector select {
+    padding: 8px 12px;
+    border: 2px solid #e1e5e9;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    min-width: 80px;
+}
+
+.videos-per-page-selector select:hover {
+    border-color: #007bff;
+}
+
+.videos-per-page-selector select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+    .videos-per-page-selector {
+        justify-content: center;
+        margin: 10px 0;
+    }
+    
+    .pagination-tabs {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .pagination-tabs .page-info,
+    .pagination-tabs .videos-per-page-info {
+        margin-left: 0 !important;
+        text-align: center;
+    }
+}
