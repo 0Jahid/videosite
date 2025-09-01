@@ -48,6 +48,98 @@ function getTimeAgo(uploadDate) {
     }
 }
 
+// Function to find similar videos by category and cast
+function findSimilarVideos(videos, currentVideo, maxResults = 4) {
+    const currentCategories = currentVideo.categories || [];
+    const currentActors = currentVideo.actors || [];
+    const currentId = currentVideo.post_id;
+    
+    // Filter out the current video and score videos by similarity
+    const scoredVideos = videos
+        .filter(video => video.fields.post_id !== currentId)
+        .map(video => {
+            const videoFields = video.fields;
+            const videoCategories = videoFields.categories || [];
+            const videoActors = videoFields.actors || [];
+            
+            let score = 0;
+            
+            // Score based on matching categories (higher priority)
+            const categoryMatches = currentCategories.filter(cat => 
+                videoCategories.includes(cat)
+            ).length;
+            score += categoryMatches * 10; // Categories have weight of 10
+            
+            // Score based on matching actors/cast
+            const actorMatches = currentActors.filter(currentActor => 
+                videoActors.some(videoActor => 
+                    videoActor.name === currentActor.name
+                )
+            ).length;
+            score += actorMatches * 5; // Actors have weight of 5
+            
+            return { video: videoFields, score };
+        })
+        .filter(item => item.score > 0) // Only include videos with some similarity
+        .sort((a, b) => b.score - a.score) // Sort by highest score first
+        .slice(0, maxResults) // Limit to max results
+        .map(item => item.video);
+    
+    // If we don't have enough similar videos, fill with recent videos
+    if (scoredVideos.length < maxResults) {
+        const recentVideos = videos
+            .filter(video => 
+                video.fields.post_id !== currentId && 
+                !scoredVideos.some(similar => similar.post_id === video.fields.post_id)
+            )
+            .sort((a, b) => new Date(b.fields.upload_date) - new Date(a.fields.upload_date))
+            .slice(0, maxResults - scoredVideos.length)
+            .map(video => video.fields);
+        
+        scoredVideos.push(...recentVideos);
+    }
+    
+    return scoredVideos;
+}
+
+// Function to render similar videos in sidebar
+function renderSimilarVideos(similarVideos) {
+    const videoListContainer = document.querySelector('.videoo-list-ab');
+    if (!videoListContainer) {
+        console.log('Video list container not found');
+        return;
+    }
+    
+    videoListContainer.innerHTML = ''; // Clear existing content
+    
+    similarVideos.forEach(video => {
+        const timeAgo = getTimeAgo(video.upload_date);
+        const videoElement = document.createElement('div');
+        videoElement.className = 'videoo';
+        
+        videoElement.innerHTML = `
+            <div class="vid_thumbainl">
+                <a href="single_video_page.html?id=${video.post_id}" title="${video.title}">
+                    <img src="${video.thumbnail_url}" alt="${video.title}" loading="lazy">
+                    <span class="hd-badge">HD</span>
+                    <span class="watch_later">
+                        <i class="icon-watch_later_fill"></i>
+                    </span>
+                </a>	
+            </div><!--vid_thumbnail end-->
+            <div class="video_info">
+                <h3><a href="single_video_page.html?id=${video.post_id}" title="${video.title}">${video.title}</a></h3>
+                <h4><a href="#" title="">${video.author}</a></h4>
+                <span class="video_views">${video.views} views • ${timeAgo}</span>
+            </div><!--video_info end-->
+        `;
+        
+        videoListContainer.appendChild(videoElement);
+    });
+    
+    console.log(`Rendered ${similarVideos.length} similar videos`);
+}
+
 // Function to update video player with embed URL
 function updateVideoPlayer(embedUrl) {
     const videoContainer = document.querySelector('.vid-pr');
@@ -60,30 +152,54 @@ function updateVideoPlayer(embedUrl) {
             cleanEmbedUrl = 'https://' + cleanEmbedUrl;
         }
         
-        // Default to direct link approach (primary option)
+        // Create working embedded video player
         videoContainer.innerHTML = `
             <div class="video-player-container">
-                <!-- Primary Default Option: Direct Link -->
-                <div class="video-direct-link" style="text-align: center; padding: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; color: white; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
-                    <div style="margin-bottom: 20px;">
-                        <i class="icon-play" style="font-size: 48px; color: rgba(255,255,255,0.9);"></i>
-                    </div>
-                    <h3 style="margin-bottom: 15px; color: white; font-size: 24px; font-weight: 600;">🎬 Watch Video</h3>
-                    <p style="margin-bottom: 25px; font-size: 16px; opacity: 0.9; line-height: 1.5;">
-                        Click the button below to watch this video in the best quality
-                    </p>
-                    <a href="${cleanEmbedUrl}" target="_blank" class="watch-video-btn" 
-                       style="display: inline-block; padding: 15px 30px; background: #fff; color: #667eea; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255,255,255,0.2);">
-                        ▶️ WATCH NOW
+                <iframe 
+                    width="100%" 
+                    height="400" 
+                    src="${cleanEmbedUrl}" 
+                    frameborder="0" 
+                    allowfullscreen
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    loading="lazy"
+                    style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"
+                ></iframe>
+                
+                <!-- Fallback if iframe doesn't work -->
+                <div class="video-fallback" style="display: none; text-align: center; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; margin-top: 10px; color: white;">
+                    <h4 style="margin-bottom: 15px; color: white;">🎬 Video Player</h4>
+                    <p style="margin-bottom: 20px;">If the video doesn't load above, click below to watch</p>
+                    <a href="${cleanEmbedUrl}" target="_blank" class="external-video-btn" 
+                       style="display: inline-block; padding: 12px 24px; background: #fff; color: #667eea; border-radius: 6px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        ▶️ Open Video
                     </a>
-                    <p style="margin-top: 20px; font-size: 14px; opacity: 0.8;">
-                        Default viewing option - Opens in a new window for the best experience
-                    </p>
                 </div>
             </div>
         `;
         
-        console.log('Video player updated with direct link as default option');
+        // Check if iframe loads properly, if not show fallback
+        const iframe = videoContainer.querySelector('iframe');
+        const fallback = videoContainer.querySelector('.video-fallback');
+        
+        // Show fallback after 8 seconds if iframe has issues
+        setTimeout(() => {
+            // Simple check - if iframe is still there but might have sandbox issues
+            try {
+                if (iframe && iframe.contentWindow) {
+                    console.log('Video iframe loaded successfully');
+                } else {
+                    console.log('Video iframe may have issues, showing fallback option');
+                    fallback.style.display = 'block';
+                }
+            } catch (error) {
+                console.log('Video iframe access error, showing fallback');
+                fallback.style.display = 'block';
+            }
+        }, 8000);
+        
+        console.log('Video player updated with embedded iframe');
     }
 }
 
@@ -219,6 +335,12 @@ async function loadSingleVideo() {
             console.log('Adding download button with URL:', videoData.download_url);
             addDownloadButton(videoData.download_url);
         }
+        
+        // Load and display similar videos
+        console.log('Loading similar videos...');
+        const similarVideos = findSimilarVideos(videos, videoData, 4);
+        console.log('Found similar videos:', similarVideos.length);
+        renderSimilarVideos(similarVideos);
         
         console.log('✅ Single video page loaded successfully');
         

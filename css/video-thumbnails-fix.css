@@ -223,26 +223,32 @@
 /* Download Button Styles */
 .download-btn {
     display: inline-block;
-    padding: 8px 12px;
+    padding: 15px 30px;
     background: linear-gradient(135deg, #28a745, #20c997);
     color: white !important;
-    border-radius: 6px;
+    border-radius: 8px;
     text-decoration: none;
     transition: all 0.3s ease;
     border: none;
     cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    min-width: 160px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
 }
 
 .download-btn:hover {
     background: linear-gradient(135deg, #218838, #1ea080);
     color: white !important;
     text-decoration: none;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
 }
 
 .download-btn i {
-    font-size: 16px;
+    font-size: 20px;
+    margin-right: 8px;
 }
 
 /* Single Video Page Styles */
